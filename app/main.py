@@ -7,3 +7,7 @@ app = FastAPI(
 )
 
 app.include_router(router)
+
+@app.get("/")
+def root():
+    return {"message": "Vector Search API running"}
