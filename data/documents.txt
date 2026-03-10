@@ -1,0 +1,6 @@
+Python is a high level programming language
+Machine learning enables computers to learn from data
+Vector databases store embeddings for similarity search
+FastAPI is used to build APIs in Python
+FAISS enables efficient vector similarity search
+Jaiganesh knows python
