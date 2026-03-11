@@ -1,8 +1,14 @@
-from .load_model import get_model
-class EmbeddingService:
+from groq import Groq
+from transformers import AutoModel
 
-    def __init__(self):
-        self.model = get_model()
+embedding_model = AutoModel.from_pretrained(
+    'jinaai/jina-embeddings-v2-base-en',
+    trust_remote_code=True
+)
 
-    def embed(self, texts):
-        return self.model.encode(texts)
+
+def get_embedding(text: str):
+
+    response = embedding_model.encode(text).tolist()
+
+    return response

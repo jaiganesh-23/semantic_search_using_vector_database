@@ -1,6 +1,10 @@
 fastapi
 uvicorn
-faiss-cpu
-sentence-transformers
-numpy
 gunicorn
+groq
+pinecone
+python-dotenv
+dotenv
+transformers==4.56.2
+onnx
+numpy

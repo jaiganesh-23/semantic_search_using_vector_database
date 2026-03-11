@@ -1,20 +1,36 @@
-from app.services.embedding_service import EmbeddingService
-from app.services.vector_service import VectorService
+import sys
+from pathlib import Path
 
-embedding_service = EmbeddingService()
+# Add the parent directory to the Python path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from app.services.embedding_service import get_embedding
+from pinecone import Pinecone
+from app.config import PINECONE_API_KEY, PINECONE_INDEX
+
+pc = Pinecone(api_key=PINECONE_API_KEY)
+
+index = pc.Index(PINECONE_INDEX)
 
 documents = []
 
-with open("data/documents.txt") as f:
+with open("../data/documents.txt") as f:
     for line in f:
         documents.append(line.strip())
 
-embeddings = embedding_service.embed(documents)
 
-dimension = embeddings.shape[1]
+vectors = []
 
-vector_db = VectorService(dimension)
+for i, doc in enumerate(documents):
 
-vector_db.add_vectors(embeddings, documents)
+    embedding = get_embedding(doc)
 
-print("Data indexed successfully")
+    vectors.append({
+        "id": str(i),
+        "values": embedding,
+        "metadata": {"text": doc}
+    })
+
+index.upsert(vectors)
+
+print("Documents uploaded successfully")

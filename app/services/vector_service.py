@@ -1,23 +1,22 @@
-import faiss
-import numpy as np
+from pinecone import Pinecone
+from app.config import PINECONE_API_KEY, PINECONE_INDEX
 
-class VectorService:
+pc = Pinecone(api_key=PINECONE_API_KEY)
 
-    def __init__(self, dimension):
-        self.index = faiss.IndexFlatL2(dimension)
-        self.documents = []
+index = pc.Index(PINECONE_INDEX)
 
-    def add_vectors(self, vectors, docs):
-        self.index.add(np.array(vectors))
-        self.documents.extend(docs)
 
-    def search(self, query_vector, k=3):
+def query_vectors(vector):
 
-        distances, indices = self.index.search(query_vector, k)
+    results = index.query(
+        vector=vector,
+        top_k=3,
+        include_metadata=True
+    )
 
-        results = []
+    output = []
 
-        for i in indices[0]:
-            results.append(self.documents[i])
+    for match in results["matches"]:
+        output.append(match["metadata"]["text"])
 
-        return results
+    return output
