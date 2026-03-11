@@ -9,3 +9,4 @@ transformers==4.56.2
 onnx
 numpy
 torch
+huggingface_hub
