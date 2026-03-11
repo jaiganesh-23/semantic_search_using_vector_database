@@ -8,3 +8,4 @@ dotenv
 transformers==4.56.2
 onnx
 numpy
+pytorch
