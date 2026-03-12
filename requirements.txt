@@ -10,3 +10,5 @@ onnx
 numpy
 torch
 huggingface_hub
+google
+google.genai

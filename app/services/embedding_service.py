@@ -1,14 +1,17 @@
 from groq import Groq
-from transformers import AutoModel
+from google import genai
+from google.genai import types
+from app.config import GOOGLE_API_KEY
 
-embedding_model = AutoModel.from_pretrained(
-    'jinaai/jina-embeddings-v2-base-en',
-    trust_remote_code=True
-)
+client = genai.Client()
+
 
 
 def get_embedding(text: str):
 
-    response = embedding_model.encode(text).tolist()
-
-    return response
+    response = client.models.embed_content(
+        model="gemini-embedding-001",
+        contents=text,
+        config=types.EmbedContentConfig(output_dimensionality=768, task_type="SEMANTIC_SIMILARITY"),
+    )
+    return response.embeddings[0].values
