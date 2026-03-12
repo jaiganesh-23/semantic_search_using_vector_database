@@ -8,8 +8,8 @@ Users can query documents using natural language and retrieve the most relevant 
 
 Python
 FastAPI
-FAISS
-SentenceTransformers
+GEMINI Embeddings
+PINECONE
 
 ## Features
 
